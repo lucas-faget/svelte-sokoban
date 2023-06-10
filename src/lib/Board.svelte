@@ -6,7 +6,7 @@
 
     type BoardFormat = Array<SquareString>
 
-    export let squares: BoardFormat | String[];
+    export let squares: BoardFormat | string[];
 </script>
 
 <div class="board">
