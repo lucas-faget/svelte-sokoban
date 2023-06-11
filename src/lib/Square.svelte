@@ -64,18 +64,7 @@
         align-items: center;
     }
 
-    .square > img {
-        width: 100%;
-        height: 100%;
-    }
-
     .position-relative {
         position: relative;
-    }
-
-    .position-absolute {
-        position: absolute;
-        top: 0;
-        left: 0;
     }
 </style>
