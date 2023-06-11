@@ -1,5 +1,6 @@
 <script lang="ts">
     import { SquareType } from "../typescript/SquareType";
+    import Image from "./Image.svelte";
 
     const AssetsDir = "/assets/sokoban/";
 
@@ -24,28 +25,31 @@
 
 <div class="square position-relative">
     {#if type === SquareType.Ground}
-        <img src={Images.Ground} alt="ground" />
+        <Image src={Images.Ground} alt="ground"></Image>
 
     {:else if type === SquareType.Wall}
-        <img src={Images.Wall} alt="wall" />
+        <Image src={Images.Ground} alt="ground"></Image>
+        <Image src={Images.Wall} alt="wall"></Image>
 
     {:else if type === SquareType.Box}
-        <img src={Images.Box} alt="box" />
+        <Image src={Images.Ground} alt="ground"></Image>
+        <Image src={Images.Box} alt="box"></Image>
 
     {:else if type === SquareType.Target}
-        <img src={Images.Ground} alt="ground" />
-        <img src={Images.Target} alt="target" class="position-absolute" />
+        <Image src={Images.Ground} alt="ground"></Image>
+        <Image src={Images.Target} alt="target"></Image>
 
     {:else if type === SquareType.BoxOnTarget}
-        <img src={Images.BoxOnTarget} alt="box on target" />
+        <Image src={Images.Ground} alt="ground"></Image>
+        <Image src={Images.BoxOnTarget} alt="box on target"></Image>
 
     {:else if type === SquareType.Player}
-        <img src={Images.Ground} alt="ground" />
-        <img src={Images.Player} alt="player" class="position-absolute" />
+        <Image src={Images.Ground} alt="ground"></Image>
+        <Image src={Images.Player} alt="target"></Image>
 
     {:else if type === SquareType.PlayerOnTarget}
-        <img src={Images.Ground} alt="ground" />
-        <img src={Images.PlayerOnTarget} alt="player" class="position-absolute" />
+        <Image src={Images.Ground} alt="ground"></Image>
+        <Image src={Images.PlayerOnTarget} alt="player on target"></Image>
     {/if}
 </div>
 
@@ -58,6 +62,11 @@
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+
+    .square > img {
+        width: 100%;
+        height: 100%;
     }
 
     .position-relative {
