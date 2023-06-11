@@ -2,11 +2,7 @@
     import { SquareType } from "../typescript/SquareType";
     import Square from "./Square.svelte";
 
-    type SquareString = `${SquareType}`;
-
-    type BoardFormat = Array<SquareString>
-
-    export let squares: BoardFormat | string[];
+    export let squares: SquareType[][];
 </script>
 
 <div class="board">

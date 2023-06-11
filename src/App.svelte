@@ -1,12 +1,15 @@
 <script lang="ts">
     import levels from "./levels/levels.json";
     import Board from "./lib/Board.svelte";
+    import { GameBoard } from "./typescript/GameBoard";
 
     const Level1 = levels.levels.shift();
+
+    const GB = GameBoard.fromJSON(Level1.board);
 </script>
 
 <main>
-    <Board squares={Level1.board}></Board>
+    <Board squares={GB.squares}></Board>
 </main>
 
 <style>

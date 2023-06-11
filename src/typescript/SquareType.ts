@@ -1,4 +1,6 @@
 export enum SquareType {
+    Void = '',
+    Ground = ' ',
     Wall = '#',
     Box = '$',
     Target = '.',
