@@ -8,13 +8,16 @@
     const Level1 = levels.levels.shift();
     const sokoban = new SokobanGame(Level1.board);
 
+    let squares = sokoban.gameBoard.squares;
+
     function move(direction: Coordinates) {
         sokoban.movePlayer(direction);
+        squares = sokoban.gameBoard.squares;
     }
 </script>
 
 <main>
-    <Board squares={sokoban.gameBoard.squares}></Board>
+    <Board squares={squares}></Board>
     <ArrowKeyDetection onArrowKey={move}></ArrowKeyDetection>
 </main>
 

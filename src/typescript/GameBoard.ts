@@ -5,31 +5,31 @@ export class GameBoard {
     squares: SquareType[][];
 
     static fromJSON(json: string[]): GameBoard {
-        const squares: SquareType[][] = json.map((row) => row.split('').map((str) => GameBoard.getSquareType(str)));
+        const squares: SquareType[][] = json.map((row) => row.split('').map((str) => GameBoard.getSquareTypeByChar(str)));
         const gameBoard: GameBoard = new GameBoard();
         gameBoard.squares = squares;
         return gameBoard;
     }
 
     toJSON(): string {
-        const jsonSquares = this.squares.map((row) => row.map((square) => GameBoard.getSquareType(square))).map((row) => row.join(''));
+        const jsonSquares = this.squares.map((row) => row.map((square) => GameBoard.getSquareTypeByChar(square))).map((row) => row.join(''));
         return JSON.stringify(jsonSquares);
     }
 
-    getSquare(x: number, y: number): SquareType|null {
-        return this.squares[x][y] ?? null;
+    getSquare(position: Coordinates): SquareType|null {
+        return this.squares[position.x][position.y] ?? null;
     }
 
-    getNextSquare(x: number, y: number, direction: Coordinates): SquareType|null {
-        return this.squares[x + direction.x][y + direction.y] ?? null;
+    getNextSquare(position: Coordinates, direction: Coordinates): SquareType|null {
+        return this.squares[position.x + direction.x][position.y + direction.y] ?? null;
     }
 
-    setSquare(x: number, y: number, squareType: SquareType): void {
-        this.squares[x][y] === squareType;
+    setSquare(position: Coordinates, squareType: SquareType): void {
+        this.squares[position.x][position.y] = squareType;
     }
 
-    setNextSquare(x: number, y: number, direction: Coordinates, squareType: SquareType): void {
-        this.squares[x + direction.x][y + direction.y] === squareType;
+    setNextSquare(position: Coordinates, direction: Coordinates, squareType: SquareType): void {
+        this.squares[position.x + direction.x][position.y + direction.y] = squareType;
     }
 
     findPlayerPosition(): Coordinates|null {
@@ -47,7 +47,7 @@ export class GameBoard {
         return null;
     }
 
-    static getSquareType(char: string): SquareType
+    static getSquareTypeByChar(char: string): SquareType
     {
         switch (char) {
             case ' ':
