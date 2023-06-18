@@ -1,4 +1,6 @@
 <script lang="ts">
+  import type { Coordinates } from "../typescript/Coordinates";
+  import { Directions } from "../typescript/Directions";
     import { SquareType } from "../typescript/SquareType";
     import Image from "./Image.svelte";
 
@@ -10,17 +12,33 @@
     const AssetsGroundDir = AssetsDir + "Ground/";
     const AssetsPlayerDir = AssetsDir + "Player/";
 
+    const PlayerImages = {
+        Up1   : AssetsPlayerDir + "player_02.png",
+        Up2   : AssetsPlayerDir + "player_03.png",
+        Up3   : AssetsPlayerDir + "player_04.png",
+        Down1 : AssetsPlayerDir + "player_23.png",
+        Down2 : AssetsPlayerDir + "player_24.png",
+        Down3 : AssetsPlayerDir + "player_01.png",
+        Right1: AssetsPlayerDir + "player_11.png",
+        Right2: AssetsPlayerDir + "player_12.png",
+        Right3: AssetsPlayerDir + "player_13.png",
+        Left1 : AssetsPlayerDir + "player_14.png",
+        Left2 : AssetsPlayerDir + "player_15.png",
+        Left3 : AssetsPlayerDir + "player_16.png"
+    }
+
     const Images = {
         Ground        : AssetsGroundDir      + "ground_06.png",
         Wall          : AssetsBlocksDir      + "block_05.png",
         Box           : AssetsCratesDir      + "crate_42.png",
         Target        : AssetsEnvironmentDir + "environment_10.png",
         BoxOnTarget   : AssetsCratesDir      + "crate_45.png",
-        Player        : AssetsPlayerDir      + "player_01.png",
+        Player        : PlayerImages.Down1,
         PlayerOnTarget: AssetsPlayerDir      + "player_01.png"
     }
 
     export let type: SquareType | string;
+    export let playerDirection: Coordinates;
 </script>
 
 <div class="square position-relative">
@@ -45,11 +63,27 @@
 
     {:else if type === SquareType.Player}
         <Image src={Images.Ground} alt="ground"></Image>
-        <Image src={Images.Player} alt="target"></Image>
+        {#if playerDirection === Directions.Up}
+            <Image src={PlayerImages.Up1} alt="player"></Image>
+        {:else if playerDirection === Directions.Right}
+            <Image src={PlayerImages.Right1} alt="player"></Image>
+        {:else if playerDirection === Directions.Left}
+            <Image src={PlayerImages.Left1} alt="player"></Image>
+        {:else}
+            <Image src={PlayerImages.Down1} alt="player"></Image>
+        {/if}
 
     {:else if type === SquareType.PlayerOnTarget}
         <Image src={Images.Ground} alt="ground"></Image>
-        <Image src={Images.PlayerOnTarget} alt="player on target"></Image>
+        {#if playerDirection === Directions.Up}
+            <Image src={PlayerImages.Up1} alt="player on target"></Image>
+        {:else if playerDirection === Directions.Right}
+            <Image src={PlayerImages.Right1} alt="player on target"></Image>
+        {:else if playerDirection === Directions.Left}
+            <Image src={PlayerImages.Left1} alt="player on target"></Image>
+        {:else}
+            <Image src={PlayerImages.Down1} alt="player on target"></Image>
+        {/if}
     {/if}
 </div>
 

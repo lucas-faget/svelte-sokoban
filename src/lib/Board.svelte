@@ -1,15 +1,17 @@
 <script lang="ts">
+    import type { Coordinates } from "../typescript/Coordinates";
     import { SquareType } from "../typescript/SquareType";
     import Square from "./Square.svelte";
 
     export let squares: SquareType[][];
+    export let playerDirection: Coordinates;
 </script>
 
 <div class="board">
     {#each squares as row}
         <div class="row">
             {#each row as square}
-                <Square type={square}></Square>
+                <Square type={square} playerDirection={playerDirection}></Square>
             {/each}
         </div>
     {/each}
