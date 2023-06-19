@@ -1,88 +1,63 @@
 <script lang="ts">
-  import type { Coordinates } from "../typescript/Coordinates";
-  import { Directions } from "../typescript/Directions";
+    import type { Coordinates } from "../typescript/Coordinates";
+    import { Directions } from "../typescript/Directions";
     import { SquareType } from "../typescript/SquareType";
     import Image from "./Image.svelte";
+    import { fade, fly } from 'svelte/transition';
 
     const AssetsDir = "/assets/sokoban/";
 
-    const AssetsBlocksDir = AssetsDir + "Blocks/";
-    const AssetsCratesDir = AssetsDir + "Crates/";
-    const AssetsEnvironmentDir = AssetsDir + "Environment/";
-    const AssetsGroundDir = AssetsDir + "Ground/";
-    const AssetsPlayerDir = AssetsDir + "Player/";
-
-    const PlayerImages = {
-        Up1   : AssetsPlayerDir + "player_02.png",
-        Up2   : AssetsPlayerDir + "player_03.png",
-        Up3   : AssetsPlayerDir + "player_04.png",
-        Down1 : AssetsPlayerDir + "player_23.png",
-        Down2 : AssetsPlayerDir + "player_24.png",
-        Down3 : AssetsPlayerDir + "player_01.png",
-        Right1: AssetsPlayerDir + "player_11.png",
-        Right2: AssetsPlayerDir + "player_12.png",
-        Right3: AssetsPlayerDir + "player_13.png",
-        Left1 : AssetsPlayerDir + "player_14.png",
-        Left2 : AssetsPlayerDir + "player_15.png",
-        Left3 : AssetsPlayerDir + "player_16.png"
-    }
-
     const Images = {
-        Ground        : AssetsGroundDir      + "ground_06.png",
-        Wall          : AssetsBlocksDir      + "block_05.png",
-        Box           : AssetsCratesDir      + "crate_42.png",
-        Target        : AssetsEnvironmentDir + "environment_10.png",
-        BoxOnTarget   : AssetsCratesDir      + "crate_45.png",
-        Player        : PlayerImages.Down1,
-        PlayerOnTarget: AssetsPlayerDir      + "player_01.png"
+        Ground        : `${AssetsDir}Ground/ground_06.png`,
+        Wall          : `${AssetsDir}Blocks/block_05.png`,
+        Box           : `${AssetsDir}Crates/crate_42.png`,
+        Target        : `${AssetsDir}Environment/environment_10.png`,
+        BoxOnTarget   : `${AssetsDir}Crates/crate_45.png`,
+        Player        : {
+            Up        : `${AssetsDir}Player/player_02.png`,
+            Right     : `${AssetsDir}Player/player_11.png`,
+            Left      : `${AssetsDir}Player/player_14.png`,
+            Down      : `${AssetsDir}Player/player_23.png`
+        },
+        PlayerOnTarget: `${AssetsDir}Player/player_01.png`
     }
 
     export let type: SquareType | string;
     export let playerDirection: Coordinates;
+
+    function flyAnimation() {
+        switch (playerDirection) {
+            case Directions.Up:
+                return { y: 60, duration: 300 };
+            case Directions.Right:
+                return { x: -60, duration: 300 };
+            case Directions.Down:
+                return { y: -60, duration: 300 };
+            case Directions.Left:
+                return { x: 60, duration: 300 };
+        }
+    }
 </script>
 
 <div class="square position-relative">
-    {#if type === SquareType.Ground}
-        <Image src={Images.Ground} alt="ground"></Image>
-
-    {:else if type === SquareType.Wall}
-        <Image src={Images.Ground} alt="ground"></Image>
-        <Image src={Images.Wall} alt="wall"></Image>
-
+    <Image src={Images.Ground} alt="ground" isTransitionEnable={false} transitionDirection={playerDirection}></Image>
+    {#if type === SquareType.Wall}
+        <Image src={Images.Wall} alt="wall" isTransitionEnable={false} transitionDirection={playerDirection}></Image>
     {:else if type === SquareType.Box}
-        <Image src={Images.Ground} alt="ground"></Image>
-        <Image src={Images.Box} alt="box"></Image>
-
+        <Image src={Images.Box} alt="box" isTransitionEnable={true} transitionDirection={playerDirection}></Image>
     {:else if type === SquareType.Target}
-        <Image src={Images.Ground} alt="ground"></Image>
-        <Image src={Images.Target} alt="target"></Image>
-
+        <Image src={Images.Target} alt="target" isTransitionEnable={false} transitionDirection={playerDirection}></Image>
     {:else if type === SquareType.BoxOnTarget}
-        <Image src={Images.Ground} alt="ground"></Image>
-        <Image src={Images.BoxOnTarget} alt="box on target"></Image>
-
-    {:else if type === SquareType.Player}
-        <Image src={Images.Ground} alt="ground"></Image>
+        <Image src={Images.BoxOnTarget} alt="box on target" isTransitionEnable={true} transitionDirection={playerDirection}></Image>
+    {:else if type === SquareType.Player || type === SquareType.PlayerOnTarget}
         {#if playerDirection === Directions.Up}
-            <Image src={PlayerImages.Up1} alt="player"></Image>
+            <Image src={Images.Player.Up} alt="player" isTransitionEnable={true} transitionDirection={playerDirection}></Image>
         {:else if playerDirection === Directions.Right}
-            <Image src={PlayerImages.Right1} alt="player"></Image>
+            <Image src={Images.Player.Right} alt="player" isTransitionEnable={true} transitionDirection={playerDirection}></Image>
         {:else if playerDirection === Directions.Left}
-            <Image src={PlayerImages.Left1} alt="player"></Image>
+            <Image src={Images.Player.Left} alt="player" isTransitionEnable={true} transitionDirection={playerDirection}></Image>
         {:else}
-            <Image src={PlayerImages.Down1} alt="player"></Image>
-        {/if}
-
-    {:else if type === SquareType.PlayerOnTarget}
-        <Image src={Images.Ground} alt="ground"></Image>
-        {#if playerDirection === Directions.Up}
-            <Image src={PlayerImages.Up1} alt="player on target"></Image>
-        {:else if playerDirection === Directions.Right}
-            <Image src={PlayerImages.Right1} alt="player on target"></Image>
-        {:else if playerDirection === Directions.Left}
-            <Image src={PlayerImages.Left1} alt="player on target"></Image>
-        {:else}
-            <Image src={PlayerImages.Down1} alt="player on target"></Image>
+            <Image src={Images.Player.Down} alt="player" isTransitionEnable={true} transitionDirection={playerDirection}></Image>
         {/if}
     {/if}
 </div>
@@ -91,8 +66,8 @@
     .square {
         color: #fff;
         background-color: #000;
-        width: 60px;
-        height: 60px;
+        width: var(--square-size);
+        height: var(--square-size);
         display: flex;
         justify-content: center;
         align-items: center;

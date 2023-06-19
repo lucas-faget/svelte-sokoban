@@ -11,7 +11,9 @@
     {#each squares as row}
         <div class="row">
             {#each row as square}
-                <Square type={square} playerDirection={playerDirection}></Square>
+                {#key square}
+                    <Square type={square} playerDirection={playerDirection}></Square>
+                {/key}
             {/each}
         </div>
     {/each}
