@@ -37,11 +37,11 @@
     {:else if type === SquareType.BoxOnTarget}
         <Image src={Images.BoxOnTarget} alt="box on target" isTransitionEnable={hasMoved} transitionDirection={playerDirection}></Image>
     {:else if type === SquareType.Player || type === SquareType.PlayerOnTarget}
-        {#if playerDirection === Directions.Up}
+        {#if playerDirection == Directions.Up}
             <Image src={Images.Player.Up} alt="player" isTransitionEnable={hasMoved} transitionDirection={playerDirection}></Image>
-        {:else if playerDirection === Directions.Right}
+        {:else if playerDirection == Directions.Right}
             <Image src={Images.Player.Right} alt="player" isTransitionEnable={hasMoved} transitionDirection={playerDirection}></Image>
-        {:else if playerDirection === Directions.Left}
+        {:else if playerDirection == Directions.Left}
             <Image src={Images.Player.Left} alt="player" isTransitionEnable={hasMoved} transitionDirection={playerDirection}></Image>
         {:else}
             <Image src={Images.Player.Down} alt="player" isTransitionEnable={hasMoved} transitionDirection={playerDirection}></Image>

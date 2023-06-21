@@ -15,18 +15,22 @@
     let isLevelWon: boolean = sokoban.board.isLevelWon();
 
     function move(direction: Coordinates) {
-        hasMoved = sokoban.movePlayer(direction);
+        sokoban.movePlayer(direction);
         squares = sokoban.board.squares;
         playerDirection = sokoban.playerDirection;
-        if (hasMoved) {
-            isLevelWon = sokoban.board.isLevelWon();
-        }
+    }
+
+    function turningBack() {
+        sokoban.deleteLastMove();
+        squares = sokoban.board.squares;
+        playerDirection = sokoban.playerDirection;
     }
 </script>
 
 <main>
-    <Board squares={squares} hasMoved={hasMoved} playerDirection={playerDirection}></Board>
     <ArrowKeyDetection onArrowKey={move}></ArrowKeyDetection>
+    <button on:click={turningBack}>Turning back</button>
+    <Board squares={squares} hasMoved={hasMoved} playerDirection={playerDirection}></Board>
 </main>
 
 <style>

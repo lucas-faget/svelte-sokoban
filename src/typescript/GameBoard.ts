@@ -55,20 +55,6 @@ export class GameBoard
         return null;
     }
 
-    move(move: Move): void
-    {
-        if (move.boxMove) {
-            this.move(move.boxMove);
-        }
-        move.fromSquare.type = move.fromNextType;
-        move.toSquare.type = move.toNextType;
-    }
-
-    undoMove(move: Move): void
-    {
-        
-    }
-
     isLevelWon(): boolean
     {
         for (const [x, row] of this.squares.entries()) {

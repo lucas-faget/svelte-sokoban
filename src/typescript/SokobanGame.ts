@@ -67,8 +67,6 @@ export class SokobanGame
             }
 
             if (move) {
-                // Perform move
-                this.board.move(move);
                 // Save move
                 this.saveMove(move);
                 // Set player coordinates
@@ -81,15 +79,33 @@ export class SokobanGame
 
     saveMove(move: Move): void
     {
+        move.performMove();
         this.moves.push(move);
-        console.log(this.moves);
     }
 
-    static getNextPosition(position: Coordinates, direction: Coordinates, step: number = 1)
+    deleteLastMove(): void
     {
-        return {
-            x: position.x + step * direction.x,
-            y: position.y + step * direction.y
+        if (this.moves.length > 0) {
+            let lastMove: Move = this.moves.pop();
+            lastMove.undoMove();
+            this.playerPosition = this.board.findPlayerPosition();
+            this.playerDirection = SokobanGame.getDirection(lastMove.fromSquare.position, lastMove.toSquare.position);
+        }
+    }
+
+    static getDirection(fromPosition: Coordinates, toPosition: Coordinates): Coordinates
+    {
+        let dx: number = toPosition.x - fromPosition.x;
+        let dy: number = toPosition.y - fromPosition.y;
+
+        if (dx < 0 && dy === 0) {
+            return Directions.Up;
+        } else if (dx === 0 && dy > 0) {
+            return Directions.Right;
+        } else if (dx === 0 && dy < 0) {
+            return Directions.Left;
+        } else {
+            return Directions.Down;
         }
     }
 }
