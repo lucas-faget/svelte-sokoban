@@ -1,6 +1,6 @@
 <script lang="ts">
-  import type { Coordinates } from "../typescript/Coordinates";
-  import { Directions } from "../typescript/Directions";
+    import type { Coordinates } from "../typescript/Coordinates";
+    import { Directions } from "../typescript/Directions";
 
     export let onArrowKey: (direction: Coordinates) => void;
 

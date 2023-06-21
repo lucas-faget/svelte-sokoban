@@ -3,24 +3,29 @@
     import ArrowKeyDetection from "./lib/ArrowKeyDetection.svelte";
     import Board from "./lib/Board.svelte";
     import type { Coordinates } from "./typescript/Coordinates";
+    import type { GameSquare } from "./typescript/GameSquare";
     import { SokobanGame } from "./typescript/SokobanGame";
-    import type { SquareType } from "./typescript/SquareType";
 
     const Level1 = levels.levels.shift();
     const sokoban = new SokobanGame(Level1.board);
 
-    let squares: SquareType[][] = sokoban.board.squares;
+    let squares: GameSquare[][] = sokoban.board.squares;
+    let hasMoved: boolean = false;
     let playerDirection: Coordinates = sokoban.playerDirection;
+    let isLevelWon: boolean = sokoban.board.isLevelWon();
 
     function move(direction: Coordinates) {
-        sokoban.movePlayer(direction);
+        hasMoved = sokoban.movePlayer(direction);
         squares = sokoban.board.squares;
-        playerDirection = sokoban.playerDirection
+        playerDirection = sokoban.playerDirection;
+        if (hasMoved) {
+            isLevelWon = sokoban.board.isLevelWon();
+        }
     }
 </script>
 
 <main>
-    <Board squares={squares} playerDirection={playerDirection}></Board>
+    <Board squares={squares} hasMoved={hasMoved} playerDirection={playerDirection}></Board>
     <ArrowKeyDetection onArrowKey={move}></ArrowKeyDetection>
 </main>
 

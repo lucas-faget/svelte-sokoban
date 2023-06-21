@@ -2,75 +2,87 @@ import { GameBoard } from "./GameBoard";
 import type { Coordinates } from "./Coordinates";
 import { SquareType } from "./SquareType";
 import { Directions } from "./Directions";
+import { Move } from "./Move";
+import type { GameSquare } from "./GameSquare";
 
-export class SokobanGame {
+export class SokobanGame
+{
     playerPosition: Coordinates;
     playerDirection: Coordinates;
     board: GameBoard;
+    moves: Move[];
 
-    constructor(json: string[])
+    constructor(json: string[][])
     {
         this.board = GameBoard.fromJSON(json);
         this.playerPosition = this.board.findPlayerPosition();
         this.playerDirection = Directions.Down;
+        this.moves = [];
     }
 
-    moveBox(boxPosition: Coordinates, direction: Coordinates): boolean
+    moveBox(boxSquare: GameSquare): Move|null
     {
-        let nextBoxSquare: SquareType|null = this.board.getNextSquare(boxPosition, direction);
-        if (nextBoxSquare && (nextBoxSquare == SquareType.Ground || nextBoxSquare == SquareType.Target)) {
-            this.board.setNextSquare(boxPosition, direction,
-                nextBoxSquare == SquareType.Target ? SquareType.BoxOnTarget : SquareType.Box
-            )
+        let boxMove: Move|null = null;
 
-            return true;
+        let nextBoxSquare: GameSquare|null = this.board.getNextSquare(boxSquare.position, this.playerDirection);
+        if (nextBoxSquare && (nextBoxSquare.type === SquareType.Ground || nextBoxSquare.type === SquareType.Target)) {
+            boxMove = new Move(boxSquare, nextBoxSquare, boxSquare.type, nextBoxSquare.type,
+                boxSquare.type === SquareType.BoxOnTarget ? SquareType.Target : SquareType.Ground,
+                nextBoxSquare.type === SquareType.Target ? SquareType.BoxOnTarget : SquareType.Box
+            );
         }
 
-        return false;
+        return boxMove;
     }
 
-    movePlayer(direction: Coordinates): void
+    movePlayer(direction: Coordinates): Move|null
     {
+        let move: Move|null = null;
+
         this.playerDirection = direction;
 
-        let playerSquare: SquareType|null = this.board.getSquare(this.playerPosition);
-        let nextSquare: SquareType|null = this.board.getNextSquare(this.playerPosition, this.playerDirection);
-        if (nextSquare && (nextSquare == SquareType.Ground || nextSquare == SquareType.Target || nextSquare == SquareType.Box || nextSquare == SquareType.BoxOnTarget))
+        let playerSquare: GameSquare|null = this.board.getSquare(this.playerPosition);
+        let nextSquare: GameSquare|null = this.board.getNextSquare(this.playerPosition, this.playerDirection);
+        if (nextSquare && (nextSquare.type === SquareType.Ground || nextSquare.type === SquareType.Target || nextSquare.type === SquareType.Box || nextSquare.type === SquareType.BoxOnTarget))
         {
-            let hasMoved: boolean = false;
-            
-            switch (nextSquare) {
+            switch (nextSquare.type) {
                 case SquareType.Ground:
-                    this.board.setNextSquare(this.playerPosition, this.playerDirection, SquareType.Player);
-                    hasMoved = true;
-                    break;
                 case SquareType.Target:
-                    this.board.setNextSquare(this.playerPosition, this.playerDirection, SquareType.PlayerOnTarget);
-                    hasMoved = true;
+                    move = new Move(playerSquare, nextSquare, playerSquare.type, nextSquare.type,
+                        playerSquare.type === SquareType.PlayerOnTarget ? SquareType.Target : SquareType.Ground,
+                        nextSquare.type === SquareType.Target ? SquareType.PlayerOnTarget : SquareType.Player
+                    );
                     break;
                 case SquareType.Box:
                 case SquareType.BoxOnTarget:
-                    let boxPosition: Coordinates|null = SokobanGame.getNextPosition(this.playerPosition, this.playerDirection);
-                    let boxType: SquareType|null = this.board.getSquare(boxPosition);
-                    if (this.moveBox(boxPosition, this.playerDirection)) {
-                        this.board.setSquare(boxPosition,
-                            boxType === SquareType.BoxOnTarget ? SquareType.PlayerOnTarget : SquareType.Player
-                        )
-                        hasMoved = true;
+                    let boxMove: Move|null = this.moveBox(nextSquare);
+                    if (boxMove) {
+                        move = new Move(playerSquare, nextSquare, playerSquare.type, boxMove.fromNextType,
+                            playerSquare.type === SquareType.PlayerOnTarget ? SquareType.Target : SquareType.Ground,
+                            boxMove.fromNextType === SquareType.Target ? SquareType.PlayerOnTarget : SquareType.Player
+                        );
+                        move.boxMove = boxMove;
                     }
                     break;
             }
 
-            if (hasMoved) {
-                // Set previous player square
-                this.board.setSquare(this.playerPosition,
-                    playerSquare === SquareType.PlayerOnTarget ? SquareType.Target : SquareType.Ground
-                );
-
+            if (move) {
+                // Perform move
+                this.board.move(move);
+                // Save move
+                this.saveMove(move);
                 // Set player coordinates
                 this.playerPosition = this.board.findPlayerPosition();
             }
         }
+
+        return move;
+    }
+
+    saveMove(move: Move): void
+    {
+        this.moves.push(move);
+        console.log(this.moves);
     }
 
     static getNextPosition(position: Coordinates, direction: Coordinates, step: number = 1)

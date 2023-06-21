@@ -1,9 +1,10 @@
 <script lang="ts">
     import type { Coordinates } from "../typescript/Coordinates";
-    import { SquareType } from "../typescript/SquareType";
+    import type { GameSquare } from "../typescript/GameSquare";
     import Square from "./Square.svelte";
 
-    export let squares: SquareType[][];
+    export let squares: GameSquare[][];
+    export let hasMoved: boolean = false;
     export let playerDirection: Coordinates;
 </script>
 
@@ -12,7 +13,7 @@
         <div class="row">
             {#each row as square}
                 {#key square}
-                    <Square type={square} playerDirection={playerDirection}></Square>
+                    <Square type={square.type} hasMoved={hasMoved} playerDirection={playerDirection}></Square>
                 {/key}
             {/each}
         </div>

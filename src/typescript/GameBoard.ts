@@ -1,45 +1,53 @@
 import type { Coordinates } from "./Coordinates";
+import { GameSquare } from "./GameSquare";
+import type { Move } from "./Move";
 import { SquareType } from "./SquareType";
 
-export class GameBoard {
-    squares: SquareType[][];
+export class GameBoard
+{
+    squares: GameSquare[][];
 
-    static fromJSON(json: string[]): GameBoard {
-        const squares: SquareType[][] = json.map((row) => row.split('').map((str) => GameBoard.getSquareTypeByChar(str)));
-        const gameBoard: GameBoard = new GameBoard();
-        gameBoard.squares = squares;
-        return gameBoard;
+    static fromJSON(json: string[][]): GameBoard
+    {
+        const squares = json.map((row, x) => row.map((char, y) => new GameSquare(x, y, GameSquare.getSquareTypeByChar(char))));
+        const board = new GameBoard();
+        board.squares = squares;
+
+        return board;
     }
 
-    toJSON(): string {
-        const jsonSquares = this.squares.map((row) => row.map((square) => GameBoard.getSquareTypeByChar(square))).map((row) => row.join(''));
-        return JSON.stringify(jsonSquares);
+    toJSON(): string
+    {
+        const json = this.squares.map((row) => row.map((square) => square.type));
+        return JSON.stringify(json);
     }
 
-    getSquare(position: Coordinates): SquareType|null {
+    getSquare(position: Coordinates): GameSquare|null
+    {
         return this.squares[position.x][position.y] ?? null;
     }
 
-    getNextSquare(position: Coordinates, direction: Coordinates): SquareType|null {
+    getNextSquare(position: Coordinates, direction: Coordinates): GameSquare|null
+    {
         return this.squares[position.x + direction.x][position.y + direction.y] ?? null;
     }
 
-    setSquare(position: Coordinates, squareType: SquareType): void {
-        this.squares[position.x][position.y] = squareType;
+    setSquare(position: Coordinates, type: SquareType): void
+    {
+        this.squares[position.x][position.y].type = type;
     }
 
-    setNextSquare(position: Coordinates, direction: Coordinates, squareType: SquareType): void {
-        this.squares[position.x + direction.x][position.y + direction.y] = squareType;
+    setNextSquare(position: Coordinates, direction: Coordinates, type: SquareType): void
+    {
+        this.squares[position.x + direction.x][position.y + direction.y].type = type;
     }
 
-    findPlayerPosition(): Coordinates|null {
+    findPlayerPosition(): Coordinates|null
+    {
         for (const [x, row] of this.squares.entries()) {
             for (const [y, square] of row.entries()) {
-                if (square === SquareType.Player || square === SquareType.PlayerOnTarget) {
-                    return {
-                        x: x, 
-                        y: y
-                    }
+                if (square.type === SquareType.Player || square.type === SquareType.PlayerOnTarget) {
+                    return square.position;
                 }
             }
         }
@@ -47,25 +55,30 @@ export class GameBoard {
         return null;
     }
 
-    static getSquareTypeByChar(char: string): SquareType
+    move(move: Move): void
     {
-        switch (char) {
-            case ' ':
-                return SquareType.Ground;
-            case '#':
-                return SquareType.Wall;
-            case '$':
-                return SquareType.Box;
-            case '.':
-                return SquareType.Target;
-            case '*':
-                return SquareType.BoxOnTarget;
-            case '@':
-                return SquareType.Player;
-            case '+':
-                return SquareType.PlayerOnTarget;
-            default:
-                return SquareType.Void;
+        if (move.boxMove) {
+            this.move(move.boxMove);
         }
+        move.fromSquare.type = move.fromNextType;
+        move.toSquare.type = move.toNextType;
+    }
+
+    undoMove(move: Move): void
+    {
+        
+    }
+
+    isLevelWon(): boolean
+    {
+        for (const [x, row] of this.squares.entries()) {
+            for (const [y, square] of row.entries()) {
+                if (square.type === SquareType.Box) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 }
