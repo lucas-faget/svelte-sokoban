@@ -2,6 +2,7 @@
     import levels from "./levels/levels.json";
     import ArrowKeyDetection from "./lib/ArrowKeyDetection.svelte";
     import Board from "./lib/Board.svelte";
+    import Button3D from "./lib/Button3D.svelte";
     import type { Coordinates } from "./typescript/Coordinates";
     import type { GameSquare } from "./typescript/GameSquare";
     import type { Move } from "./typescript/Move";
@@ -33,14 +34,18 @@
     <ArrowKeyDetection onArrowKey={move}></ArrowKeyDetection>
     <div class="sokoban">
         <Board squares={squares} lastMove={lastMove} playerDirection={playerDirection}></Board>
-        <div>
-            <button on:click={goToLastMove}>Go To Last Move</button>
+        <div class="position-fixed" on:click={goToLastMove} on:keydown={goToLastMove}>
+            <Button3D text="Go to last move"></Button3D>
         </div>
     </div>
 </main>
 
 <style>
     main {
+        background: url("/landscapes/landscape.jpg");
+        background-size: cover;
+        background-position: center top;
+        background-repeat: no-repeat;
         min-height: 100vh;
         display: flex;
         justify-content: center;
@@ -51,6 +56,11 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 20px;
+    }
+
+    .position-fixed {
+        position: fixed;
+        top: 20px;
+        right: calc(35px);
     }
 </style>
