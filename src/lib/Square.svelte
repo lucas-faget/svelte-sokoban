@@ -22,7 +22,7 @@
     }
 
     export let type: SquareType;
-    export let hasMoved: boolean = false;
+    export let hasMoved: boolean;
     export let playerDirection: Coordinates;
 </script>
 

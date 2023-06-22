@@ -77,6 +77,11 @@ export class SokobanGame
         return move;
     }
 
+    getLastMove(): Move|null
+    {
+        return this.moves.length > 0 ? this.moves[this.moves.length - 1] : null;
+    }
+
     saveMove(move: Move): void
     {
         move.performMove();
@@ -91,6 +96,11 @@ export class SokobanGame
             this.playerPosition = this.board.findPlayerPosition();
             this.playerDirection = SokobanGame.getDirection(lastMove.fromSquare.position, lastMove.toSquare.position);
         }
+    }
+
+    static areEqualPositions(position1: Coordinates, position2: Coordinates): boolean
+    {
+        return position1.x === position2.x && position1.y === position2.y;
     }
 
     static getDirection(fromPosition: Coordinates, toPosition: Coordinates): Coordinates
