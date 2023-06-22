@@ -21,8 +21,8 @@
         playerDirection = sokoban.playerDirection;
     }
 
-    function turningBack() {
-        sokoban.deleteLastMove();
+    function goToLastMove() {
+        sokoban.goToLastMove();
         squares = sokoban.board.squares;
         lastMove = null;
         playerDirection = sokoban.playerDirection;
@@ -31,8 +31,12 @@
 
 <main>
     <ArrowKeyDetection onArrowKey={move}></ArrowKeyDetection>
-    <button on:click={turningBack}>Turning back</button>
-    <Board squares={squares} lastMove={lastMove} playerDirection={playerDirection}></Board>
+    <div class="sokoban">
+        <Board squares={squares} lastMove={lastMove} playerDirection={playerDirection}></Board>
+        <div>
+            <button on:click={goToLastMove}>Go To Last Move</button>
+        </div>
+    </div>
 </main>
 
 <style>
@@ -41,5 +45,12 @@
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+
+    .sokoban {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
     }
 </style>

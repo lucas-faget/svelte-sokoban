@@ -10,10 +10,6 @@
     export let playerDirection: Coordinates;
 
     function hasMoved(position: Coordinates): boolean {
-        if (lastMove) {
-            console.log(lastMove);
-            console.log(lastMove.toSquare)
-        }
         return lastMove && (
             SokobanGame.areEqualPositions(lastMove.fromSquare.position, position) || 
             SokobanGame.areEqualPositions(lastMove.toSquare.position, position) || 

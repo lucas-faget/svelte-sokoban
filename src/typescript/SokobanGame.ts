@@ -88,7 +88,7 @@ export class SokobanGame
         this.moves.push(move);
     }
 
-    deleteLastMove(): void
+    goToLastMove(): void
     {
         if (this.moves.length > 0) {
             let lastMove: Move = this.moves.pop();

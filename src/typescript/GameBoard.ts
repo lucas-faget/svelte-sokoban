@@ -1,6 +1,5 @@
 import type { Coordinates } from "./Coordinates";
 import { GameSquare } from "./GameSquare";
-import type { Move } from "./Move";
 import { SquareType } from "./SquareType";
 
 export class GameBoard
@@ -9,7 +8,10 @@ export class GameBoard
 
     static fromJSON(json: string[][]): GameBoard
     {
-        const squares = json.map((row, x) => row.map((char, y) => new GameSquare(x, y, GameSquare.getSquareTypeByChar(char))));
+        console.log(json);
+        json = GameBoard.removeOutsideSquares(json);
+        console.log(json);
+        const squares: GameSquare[][] = json.map((row, x) => row.map((char, y) => new GameSquare(x, y, GameSquare.getSquareTypeByChar(char))));
         const board = new GameBoard();
         board.squares = squares;
 
@@ -66,5 +68,46 @@ export class GameBoard
         }
 
         return true;
+    }
+
+    static removeOutsideSquares(squares: string[][]): string[][]
+    {
+        for (let x = 0; x < squares.length; x++) {
+            let firstY: number|undefined = undefined;
+            let lastY: number|undefined = undefined;
+            for (let y = 0; y < squares[x].length; y++) {
+                if (squares[x][y] && squares[x][y] !== SquareType.Ground && squares[x][y] !== SquareType.Void) {
+                    lastY = y;
+                    if (firstY === undefined) {
+                        firstY = y;
+                    }
+                }
+            }
+            for (let y = 0; y < squares[x].length; y++) {
+                if (y < firstY || y > lastY) {
+                    squares[x][y] = SquareType.Void;
+                }
+            }
+        }
+
+        for (let y = 0; y < squares[0].length; y++) {
+            let firstX: number|undefined = undefined;
+            let lastX: number|undefined = undefined;
+            for (let x = 0; x < squares.length; x++) {
+                if (squares[x][y] && squares[x][y] !== SquareType.Ground && squares[x][y] !== SquareType.Void) {
+                    lastX = x;
+                    if (firstX === undefined) {
+                        firstX = x;
+                    }
+                }
+            }
+            for (let x = 0; x < squares.length; x++) {
+                if (x < firstX || x > lastX) {
+                    squares[x][y] = SquareType.Void;
+                }
+            }
+        }
+
+        return squares;
     }
 }
