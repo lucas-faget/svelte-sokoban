@@ -1,3 +1,6 @@
+@import 'https://fonts.googleapis.com/css?family=Rubik+One';
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
 :root {
     --square-size: 60px;
 }
@@ -6,4 +9,17 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+}
+
+h2, h3 {
+    text-align: center;
+    font-weight: normal;
+}
+
+h2 {
+    font-size: 35px;
+}
+
+h3 {
+    font-size: 20px;
 }

@@ -1,25 +1,9 @@
 <script lang="ts">
     import type { Coordinates } from "../typescript/Coordinates";
     import { Directions } from "../typescript/Directions";
+    import { Images } from "../typescript/Images";
     import { SquareType } from "../typescript/SquareType";
     import Image from "./Image.svelte";
-
-    const AssetsDir = "/assets/sokoban/";
-
-    const Images = {
-        Ground        : `${AssetsDir}Ground/ground_06.png`,
-        Wall          : `${AssetsDir}Blocks/block_05.png`,
-        Box           : `${AssetsDir}Crates/crate_42.png`,
-        Target        : `${AssetsDir}Environment/environment_10.png`,
-        BoxOnTarget   : `${AssetsDir}Crates/crate_45.png`,
-        Player        : {
-            Up        : `${AssetsDir}Player/player_02.png`,
-            Right     : `${AssetsDir}Player/player_11.png`,
-            Left      : `${AssetsDir}Player/player_14.png`,
-            Down      : `${AssetsDir}Player/player_23.png`
-        },
-        PlayerOnTarget: `${AssetsDir}Player/player_01.png`
-    }
 
     export let type: SquareType;
     export let hasMoved: boolean;

@@ -7,18 +7,16 @@
 </div>
 
 <style>
-    @import 'https://fonts.googleapis.com/css?family=Rubik+One';
 
     .button {
         display: inline-block;
         padding: 20px 40px;
         color: white;
-        position: absolute;
-        transform: translateX(-100%);
+        position: relative;
         vertical-align: middle;
         font-family: 'Rubik One', sans-serif;
         text-decoration: none;
-        font-size: max(16px, 2vw);
+        font-size: max(12px, 2vw);
         transition: all .5s;
         background-color: hsl(204, 70%, 53%);
         white-space: nowrap;
