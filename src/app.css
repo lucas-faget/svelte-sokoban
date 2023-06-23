@@ -11,9 +11,14 @@
     box-sizing: border-box;
 }
 
-h2, h3 {
+h1, h2, h3 {
     text-align: center;
     font-weight: normal;
+    font-family: 'Anton';
+}
+
+h1 {
+    font-size: 45px;
 }
 
 h2 {

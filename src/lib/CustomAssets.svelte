@@ -22,7 +22,6 @@
         justify-content: center;
         flex-wrap: wrap;
         gap: 30px;
-        font-family: 'Anton';
     }
 
     .assets {

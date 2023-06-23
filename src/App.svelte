@@ -9,6 +9,8 @@
     import type { GameSquare } from "./typescript/GameSquare";
     import type { Move } from "./typescript/Move";
     import { SokobanGame } from "./typescript/SokobanGame";
+    import Image from "./lib/Image.svelte";
+    import { Images } from "./typescript/Images";
 
     const Level1 = levels.levels.shift();
     let sokoban: SokobanGame = new SokobanGame(Level1.board);
@@ -41,6 +43,15 @@
     <Background></Background>
     <ArrowKeyDetection onArrowKey={move}></ArrowKeyDetection>
     <div class="sokoban">
+        <div class="title">
+            <div class="image">
+                <Image src={Images.Player.Right} alt="player" isTransitionEnable={false} transitionDirection={null}></Image>
+            </div>
+            <h1>Play Sokoban</h1>
+            <div class="image">
+                <Image src={Images.Player.Left} alt="player" isTransitionEnable={false} transitionDirection={null}></Image>
+            </div>
+        </div>
         <Board squares={squares} lastMove={lastMove} playerDirection={playerDirection}></Board>
         <div class="buttons">
             <div on:click={goToLastMove} on:keydown={goToLastMove}>
@@ -68,6 +79,18 @@
         flex-direction: column;
         align-items: center;
         gap: 50px;
+        padding-block: 50px;
+    }
+
+    .title {
+        display: flex;
+        gap: 10px;
+    }
+
+    .image {
+        position: relative;
+        width: var(--square-size);
+        height: var(--square-size);
     }
 
     .buttons {
