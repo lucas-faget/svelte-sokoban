@@ -11,7 +11,7 @@
     import { SokobanGame } from "./typescript/SokobanGame";
     import Image from "./lib/Image.svelte";
     import type { Assets } from "./typescript/Assets";
-  import { PlayerImages } from "./typescript/PlayerAssets";
+    import { PlayerImages } from "./typescript/PlayerAssets";
 
     const Level1 = levels.levels.shift();
     let sokoban: SokobanGame = new SokobanGame(Level1.board);
@@ -21,22 +21,26 @@
     let playerDirection: Coordinates = sokoban.playerDirection;
     let assets: Assets = sokoban.assets;
 
+    function refreshBoard() {
+        squares = sokoban.board.squares; 
+    }
+
     function move(direction: Coordinates) {
         lastMove = sokoban.movePlayer(direction);
-        squares = sokoban.board.squares;
+        refreshBoard();
         playerDirection = sokoban.playerDirection;
     }
 
     function goToLastMove() {
         sokoban.goToLastMove();
-        squares = sokoban.board.squares;
+        refreshBoard();
         lastMove = null;
         playerDirection = sokoban.playerDirection;
     }
 
     function restartLevel() {
         sokoban = new SokobanGame(Level1.board);
-        squares = sokoban.board.squares;
+        refreshBoard();
         playerDirection = sokoban.playerDirection;
     }
 </script>
@@ -63,7 +67,7 @@
                 <Button3D text="Restart level"></Button3D>
             </div>
         </div>
-        <CustomAssets assets={assets}></CustomAssets>
+        <CustomAssets assets={assets} onRefreshBoard={refreshBoard}></CustomAssets>
     </div>
 </main>
 

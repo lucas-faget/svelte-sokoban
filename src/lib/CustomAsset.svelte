@@ -6,9 +6,11 @@
 
     export let title: string;
     export let asset: Asset;
+    export let onRefreshBoard: () => void;
 
     function changeAsset(direction: AssetDirection): void {
         asset = Assets.setAsset(asset, direction);
+        onRefreshBoard();
     }
 </script>
 
