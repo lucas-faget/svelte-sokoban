@@ -1,16 +1,18 @@
 <script lang="ts">
-    import { Images } from "../typescript/Images";
+    import type { Assets } from "../typescript/Assets";
     import CustomAsset from "./CustomAsset.svelte";
+
+    export let assets: Assets;
 </script>
 
 <div class="assets-container">
     <h2>Custom Assets</h2>
     <div class="assets">
-        <CustomAsset title="Ground" src={Images.Ground}></CustomAsset>
-        <CustomAsset title="Wall" src={Images.Wall}></CustomAsset>
-        <CustomAsset title="Target" src={Images.Target}></CustomAsset>
-        <CustomAsset title="Box" src={Images.Box}></CustomAsset>
-        <CustomAsset title="Box on target" src={Images.BoxOnTarget}></CustomAsset>
+        <CustomAsset title="Ground" asset={assets.ground}></CustomAsset>
+        <CustomAsset title="Wall" asset={assets.wall}></CustomAsset>
+        <CustomAsset title="Target" asset={assets.target}></CustomAsset>
+        <CustomAsset title="Box" asset={assets.box}></CustomAsset>
+        <CustomAsset title="Box on target" asset={assets.boxOnTarget}></CustomAsset>
     </div>
 </div>
 

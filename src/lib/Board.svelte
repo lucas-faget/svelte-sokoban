@@ -1,4 +1,5 @@
 <script lang="ts">
+  import type { Assets } from "../typescript/Assets";
     import type { Coordinates } from "../typescript/Coordinates";
     import type { GameSquare } from "../typescript/GameSquare";
     import type { Move } from "../typescript/Move";
@@ -8,6 +9,7 @@
     export let squares: GameSquare[][];
     export let lastMove: Move|null;
     export let playerDirection: Coordinates;
+    export let assets: Assets;
 
     function hasMoved(position: Coordinates): boolean {
         return lastMove && (
@@ -23,7 +25,7 @@
         <div class="row">
             {#each row as square}
                 {#key square}
-                    <Square type={square.type} hasMoved={hasMoved(square.position)} playerDirection={playerDirection}></Square>
+                    <Square type={square.type} hasMoved={hasMoved(square.position)} playerDirection={playerDirection} assets={assets}></Square>
                 {/key}
             {/each}
         </div>

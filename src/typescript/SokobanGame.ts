@@ -4,6 +4,7 @@ import { SquareType } from "./SquareType";
 import { Directions } from "./Directions";
 import { Move } from "./Move";
 import type { GameSquare } from "./GameSquare";
+import { Assets } from "./Assets";
 
 export class SokobanGame
 {
@@ -11,6 +12,7 @@ export class SokobanGame
     playerDirection: Coordinates;
     board: GameBoard;
     moves: Move[];
+    assets: Assets;
 
     constructor(json: string[][])
     {
@@ -18,6 +20,8 @@ export class SokobanGame
         this.playerPosition = this.board.findPlayerPosition();
         this.playerDirection = Directions.Down;
         this.moves = [];
+        this.assets = new Assets();
+        console.log(this.assets);
     }
 
     moveBox(boxSquare: GameSquare): Move|null

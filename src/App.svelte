@@ -10,7 +10,8 @@
     import type { Move } from "./typescript/Move";
     import { SokobanGame } from "./typescript/SokobanGame";
     import Image from "./lib/Image.svelte";
-    import { Images } from "./typescript/Images";
+    import type { Assets } from "./typescript/Assets";
+  import { PlayerImages } from "./typescript/PlayerAssets";
 
     const Level1 = levels.levels.shift();
     let sokoban: SokobanGame = new SokobanGame(Level1.board);
@@ -18,6 +19,7 @@
     let squares: GameSquare[][] = sokoban.board.squares;
     let lastMove: Move|null = null;
     let playerDirection: Coordinates = sokoban.playerDirection;
+    let assets: Assets = sokoban.assets;
 
     function move(direction: Coordinates) {
         lastMove = sokoban.movePlayer(direction);
@@ -45,14 +47,14 @@
     <div class="sokoban">
         <div class="title">
             <div class="image">
-                <Image src={Images.Player.Right} alt="player" isTransitionEnable={false} transitionDirection={null}></Image>
+                <Image src={PlayerImages.Right} alt="player" isTransitionEnable={false} transitionDirection={null}></Image>
             </div>
             <h1>Play Sokoban</h1>
             <div class="image">
-                <Image src={Images.Player.Left} alt="player" isTransitionEnable={false} transitionDirection={null}></Image>
+                <Image src={PlayerImages.Left} alt="player" isTransitionEnable={false} transitionDirection={null}></Image>
             </div>
         </div>
-        <Board squares={squares} lastMove={lastMove} playerDirection={playerDirection}></Board>
+        <Board squares={squares} lastMove={lastMove} playerDirection={playerDirection} assets={assets}></Board>
         <div class="buttons">
             <div on:click={goToLastMove} on:keydown={goToLastMove}>
                 <Button3D text="Go to last move"></Button3D>
@@ -61,7 +63,7 @@
                 <Button3D text="Restart level"></Button3D>
             </div>
         </div>
-        <CustomAssets></CustomAssets>
+        <CustomAssets assets={assets}></CustomAssets>
     </div>
 </main>
 

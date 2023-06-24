@@ -1,35 +1,37 @@
 <script lang="ts">
+    import type { Assets } from "../typescript/Assets";
     import type { Coordinates } from "../typescript/Coordinates";
     import { Directions } from "../typescript/Directions";
-    import { Images } from "../typescript/Images";
     import { SquareType } from "../typescript/SquareType";
     import Image from "./Image.svelte";
+    import { PlayerImages } from "../typescript/PlayerAssets";
 
     export let type: SquareType;
     export let hasMoved: boolean;
     export let playerDirection: Coordinates;
+    export let assets: Assets;
 </script>
 
 <div class="square position-relative">
     {#if type !== SquareType.Void}
-        <Image src={Images.Ground} alt="ground" isTransitionEnable={false} transitionDirection={playerDirection}></Image>
+        <Image src={assets.ground.src} alt={assets.ground.alt} isTransitionEnable={false} transitionDirection={playerDirection}></Image>
         {#if type === SquareType.Wall}
-            <Image src={Images.Wall} alt="wall" isTransitionEnable={false} transitionDirection={playerDirection}></Image>
-        {:else if type === SquareType.Box}
-            <Image src={Images.Box} alt="box" isTransitionEnable={hasMoved} transitionDirection={playerDirection}></Image>
+            <Image src={assets.wall.src} alt={assets.wall.alt} isTransitionEnable={false} transitionDirection={playerDirection}></Image>
         {:else if type === SquareType.Target}
-            <Image src={Images.Target} alt="target" isTransitionEnable={false} transitionDirection={playerDirection}></Image>
+            <Image src={assets.target.src} alt={assets.target.alt} isTransitionEnable={false} transitionDirection={playerDirection}></Image>
+        {:else if type === SquareType.Box}
+            <Image src={assets.box.src} alt={assets.box.alt} isTransitionEnable={hasMoved} transitionDirection={playerDirection}></Image>
         {:else if type === SquareType.BoxOnTarget}
-            <Image src={Images.BoxOnTarget} alt="box on target" isTransitionEnable={hasMoved} transitionDirection={playerDirection}></Image>
+            <Image src={assets.boxOnTarget.src} alt={assets.boxOnTarget.alt} isTransitionEnable={hasMoved} transitionDirection={playerDirection}></Image>
         {:else if type === SquareType.Player || type === SquareType.PlayerOnTarget}
             {#if playerDirection == Directions.Up}
-                <Image src={Images.Player.Up} alt="player" isTransitionEnable={hasMoved} transitionDirection={playerDirection}></Image>
+                <Image src={PlayerImages.Up} alt="player" isTransitionEnable={hasMoved} transitionDirection={playerDirection}></Image>
             {:else if playerDirection == Directions.Right}
-                <Image src={Images.Player.Right} alt="player" isTransitionEnable={hasMoved} transitionDirection={playerDirection}></Image>
+                <Image src={PlayerImages.Right} alt="player" isTransitionEnable={hasMoved} transitionDirection={playerDirection}></Image>
             {:else if playerDirection == Directions.Left}
-                <Image src={Images.Player.Left} alt="player" isTransitionEnable={hasMoved} transitionDirection={playerDirection}></Image>
+                <Image src={PlayerImages.Left} alt="player" isTransitionEnable={hasMoved} transitionDirection={playerDirection}></Image>
             {:else}
-                <Image src={Images.Player.Down} alt="player" isTransitionEnable={hasMoved} transitionDirection={playerDirection}></Image>
+                <Image src={PlayerImages.Down} alt="player" isTransitionEnable={hasMoved} transitionDirection={playerDirection}></Image>
             {/if}
         {/if}
     {/if}
