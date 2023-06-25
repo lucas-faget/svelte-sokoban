@@ -22,9 +22,12 @@ export const SquareImages: Map<SquareType, string[]> = new Map([
         `${AssetsDir}Environment/environment_14.png`
     ]],
     [SquareType.Box, [
-        `${AssetsDir}Crates/crate_42.png`
+        `${AssetsDir}Crates/crate_42.png`,
+        `${AssetsDir}Crates/crate_01.png`
     ]],
     [SquareType.BoxOnTarget, [
-        `${AssetsDir}Crates/crate_45.png`
+        `${AssetsDir}Crates/crate_45.png`,
+        `${AssetsDir}Crates/crate_43.png`,
+        `${AssetsDir}Crates/crate_44.png`
     ]]
 ]);
