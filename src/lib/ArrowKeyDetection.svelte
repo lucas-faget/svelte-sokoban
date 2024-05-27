@@ -20,5 +20,5 @@
         }
     }
 </script>
-  
+
 <svelte:window on:keydown|preventDefault={handleKeyDown} />

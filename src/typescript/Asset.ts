@@ -5,4 +5,4 @@ export type Asset = {
     src: string;
     alt: string;
     index: number;
-}
+};

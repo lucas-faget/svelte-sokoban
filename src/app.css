@@ -1,5 +1,5 @@
-@import 'https://fonts.googleapis.com/css?family=Rubik+One';
-@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+@import "https://fonts.googleapis.com/css?family=Rubik+One";
+@import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
 
 :root {
     --square-size: 60px;
@@ -11,10 +11,12 @@
     box-sizing: border-box;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
     text-align: center;
     font-weight: normal;
-    font-family: 'Anton', sans-serif;
+    font-family: "Anton", sans-serif;
 }
 
 h1 {

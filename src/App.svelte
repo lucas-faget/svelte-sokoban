@@ -17,12 +17,12 @@
     let sokoban: SokobanGame = new SokobanGame(Level1.board);
 
     let squares: GameSquare[][] = sokoban.board.squares;
-    let lastMove: Move|null = null;
+    let lastMove: Move | null = null;
     let playerDirection: Coordinates = sokoban.playerDirection;
     let assets: Assets = sokoban.assets;
 
     function refreshBoard() {
-        squares = sokoban.board.squares; 
+        squares = sokoban.board.squares;
     }
 
     function move(direction: Coordinates) {
@@ -51,14 +51,24 @@
     <div class="sokoban">
         <div class="title">
             <div class="image">
-                <Image src={PlayerImages.Right} alt="player" isTransitionEnable={false} transitionDirection={null}></Image>
+                <Image
+                    src={PlayerImages.Right}
+                    alt="player"
+                    isTransitionEnable={false}
+                    transitionDirection={null}
+                ></Image>
             </div>
             <h1>Play Sokoban</h1>
             <div class="image">
-                <Image src={PlayerImages.Left} alt="player" isTransitionEnable={false} transitionDirection={null}></Image>
+                <Image
+                    src={PlayerImages.Left}
+                    alt="player"
+                    isTransitionEnable={false}
+                    transitionDirection={null}
+                ></Image>
             </div>
         </div>
-        <Board squares={squares} lastMove={lastMove} playerDirection={playerDirection} assets={assets}></Board>
+        <Board {squares} {lastMove} {playerDirection} {assets}></Board>
         <div class="buttons">
             <div on:click={goToLastMove} on:keydown={goToLastMove}>
                 <Button3D text="Go to last move"></Button3D>
@@ -67,7 +77,7 @@
                 <Button3D text="Restart level"></Button3D>
             </div>
         </div>
-        <CustomAssets assets={assets} onRefreshBoard={refreshBoard}></CustomAssets>
+        <CustomAssets {assets} onRefreshBoard={refreshBoard}></CustomAssets>
     </div>
 </main>
 

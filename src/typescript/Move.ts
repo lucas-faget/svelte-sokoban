@@ -1,18 +1,23 @@
 import type { GameSquare } from "./GameSquare";
 import type { SquareType } from "./SquareType";
 
-export class Move
-{
+export class Move {
     fromSquare: GameSquare;
     toSquare: GameSquare;
     fromPreviousType: SquareType;
     toPreviousType: SquareType;
     fromNextType: SquareType;
     toNextType: SquareType;
-    boxMove: Move|null;
+    boxMove: Move | null;
 
-    constructor(fromSquare: GameSquare, toSquare: GameSquare, fromPreviousType: SquareType, toPreviousType: SquareType, fromNextType: SquareType, toNextType: SquareType)
-    {
+    constructor(
+        fromSquare: GameSquare,
+        toSquare: GameSquare,
+        fromPreviousType: SquareType,
+        toPreviousType: SquareType,
+        fromNextType: SquareType,
+        toNextType: SquareType
+    ) {
         this.fromSquare = fromSquare;
         this.toSquare = toSquare;
         this.fromPreviousType = fromPreviousType;
@@ -22,8 +27,7 @@ export class Move
         this.boxMove = null;
     }
 
-    performMove(): void
-    {
+    performMove(): void {
         if (this.boxMove) {
             this.boxMove.performMove();
         }
@@ -31,8 +35,7 @@ export class Move
         this.toSquare.type = this.toNextType;
     }
 
-    undoMove(): void
-    {
+    undoMove(): void {
         this.fromSquare.type = this.fromPreviousType;
         this.toSquare.type = this.toPreviousType;
         if (this.boxMove) {

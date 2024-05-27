@@ -9,11 +9,12 @@
 <div class="assets-container">
     <h2>Custom Assets</h2>
     <div class="assets">
-        <CustomAsset title="Ground" asset={assets.ground} onRefreshBoard={onRefreshBoard}></CustomAsset>
-        <CustomAsset title="Wall" asset={assets.wall} onRefreshBoard={onRefreshBoard}></CustomAsset>
-        <CustomAsset title="Target" asset={assets.target} onRefreshBoard={onRefreshBoard}></CustomAsset>
-        <CustomAsset title="Box" asset={assets.box} onRefreshBoard={onRefreshBoard}></CustomAsset>
-        <CustomAsset title="Box on target" asset={assets.boxOnTarget} onRefreshBoard={onRefreshBoard}></CustomAsset>
+        <CustomAsset title="Ground" asset={assets.ground} {onRefreshBoard}></CustomAsset>
+        <CustomAsset title="Wall" asset={assets.wall} {onRefreshBoard}></CustomAsset>
+        <CustomAsset title="Target" asset={assets.target} {onRefreshBoard}></CustomAsset>
+        <CustomAsset title="Box" asset={assets.box} {onRefreshBoard}></CustomAsset>
+        <CustomAsset title="Box on target" asset={assets.boxOnTarget} {onRefreshBoard}
+        ></CustomAsset>
     </div>
 </div>
 

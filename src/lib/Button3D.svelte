@@ -7,17 +7,16 @@
 </div>
 
 <style>
-
     .button {
         display: inline-block;
         padding: 20px 40px;
         color: white;
         position: relative;
         vertical-align: middle;
-        font-family: 'Rubik One', sans-serif;
+        font-family: "Rubik One", sans-serif;
         text-decoration: none;
         font-size: max(12px, 2vw);
-        transition: all .5s;
+        transition: all 0.5s;
         background-color: hsl(204, 70%, 53%);
         white-space: nowrap;
         cursor: pointer;
@@ -25,8 +24,8 @@
 
     .button::before {
         position: absolute;
-        content: '';
-        transition: all .5s;
+        content: "";
+        transition: all 0.5s;
         bottom: -15px;
         height: 15px;
         width: 100%;
@@ -37,8 +36,8 @@
 
     .button::after {
         position: absolute;
-        content: '';
-        transition: all .5s;
+        content: "";
+        transition: all 0.5s;
         right: -15px;
         height: 100%;
         width: 15px;

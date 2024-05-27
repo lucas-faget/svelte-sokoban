@@ -17,18 +17,30 @@
 <div class="asset">
     <h3>{title}</h3>
     <div class="image-and-arrows">
-        <span class="material-symbols-outlined" on:click={() => changeAsset(AssetDirection.Previous)} on:keydown={() => changeAsset(AssetDirection.Previous)}>
+        <span
+            class="material-symbols-outlined"
+            on:click={() => changeAsset(AssetDirection.Previous)}
+            on:keydown={() => changeAsset(AssetDirection.Previous)}
+        >
             arrow_back_ios_new
         </span>
         <div class="image">
-            <Image src={asset.src} alt={asset.alt} isTransitionEnable={false} transitionDirection={null}></Image>
+            <Image
+                src={asset.src}
+                alt={asset.alt}
+                isTransitionEnable={false}
+                transitionDirection={null}
+            ></Image>
         </div>
-        <span class="material-symbols-outlined" on:click={() => changeAsset(AssetDirection.Next)} on:keydown={() => changeAsset(AssetDirection.Next)}>
+        <span
+            class="material-symbols-outlined"
+            on:click={() => changeAsset(AssetDirection.Next)}
+            on:keydown={() => changeAsset(AssetDirection.Next)}
+        >
             arrow_forward_ios
         </span>
     </div>
 </div>
-
 
 <style>
     .asset {
@@ -58,9 +70,9 @@
     .material-symbols-outlined {
         cursor: pointer;
         font-variation-settings:
-        'FILL' 0,
-        'wght' 400,
-        'GRAD' 0,
-        'opsz' 48;
+            "FILL" 0,
+            "wght" 400,
+            "GRAD" 0,
+            "opsz" 48;
     }
 </style>

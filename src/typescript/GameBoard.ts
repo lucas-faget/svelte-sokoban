@@ -2,51 +2,48 @@ import type { Coordinates } from "./Coordinates";
 import { GameSquare } from "./GameSquare";
 import { SquareType } from "./SquareType";
 
-export class GameBoard
-{
+export class GameBoard {
     squares: GameSquare[][];
 
-    static fromJSON(json: string[][]): GameBoard
-    {
+    static fromJSON(json: string[][]): GameBoard {
         json = GameBoard.removeOutsideSquares(json);
-        const squares: GameSquare[][] = json.map((row, x) => row.map((char, y) => new GameSquare(x, y, GameSquare.getSquareTypeByChar(char))));
+        const squares: GameSquare[][] = json.map((row, x) =>
+            row.map((char, y) => new GameSquare(x, y, GameSquare.getSquareTypeByChar(char)))
+        );
         const board = new GameBoard();
         board.squares = squares;
 
         return board;
     }
 
-    toJSON(): string
-    {
+    toJSON(): string {
         const json = this.squares.map((row) => row.map((square) => square.type));
         return JSON.stringify(json);
     }
 
-    getSquare(position: Coordinates): GameSquare|null
-    {
+    getSquare(position: Coordinates): GameSquare | null {
         return this.squares[position.x][position.y] ?? null;
     }
 
-    getNextSquare(position: Coordinates, direction: Coordinates): GameSquare|null
-    {
+    getNextSquare(position: Coordinates, direction: Coordinates): GameSquare | null {
         return this.squares[position.x + direction.x][position.y + direction.y] ?? null;
     }
 
-    setSquare(position: Coordinates, type: SquareType): void
-    {
+    setSquare(position: Coordinates, type: SquareType): void {
         this.squares[position.x][position.y].type = type;
     }
 
-    setNextSquare(position: Coordinates, direction: Coordinates, type: SquareType): void
-    {
+    setNextSquare(position: Coordinates, direction: Coordinates, type: SquareType): void {
         this.squares[position.x + direction.x][position.y + direction.y].type = type;
     }
 
-    findPlayerPosition(): Coordinates|null
-    {
+    findPlayerPosition(): Coordinates | null {
         for (const [x, row] of this.squares.entries()) {
             for (const [y, square] of row.entries()) {
-                if (square.type === SquareType.Player || square.type === SquareType.PlayerOnTarget) {
+                if (
+                    square.type === SquareType.Player ||
+                    square.type === SquareType.PlayerOnTarget
+                ) {
                     return square.position;
                 }
             }
@@ -55,8 +52,7 @@ export class GameBoard
         return null;
     }
 
-    isLevelWon(): boolean
-    {
+    isLevelWon(): boolean {
         for (const [x, row] of this.squares.entries()) {
             for (const [y, square] of row.entries()) {
                 if (square.type === SquareType.Box) {
@@ -68,13 +64,16 @@ export class GameBoard
         return true;
     }
 
-    static removeOutsideSquares(squares: string[][]): string[][]
-    {
+    static removeOutsideSquares(squares: string[][]): string[][] {
         for (let x = 0; x < squares.length; x++) {
-            let startY: number|undefined = undefined;
-            let endY: number|undefined = undefined;
+            let startY: number | undefined = undefined;
+            let endY: number | undefined = undefined;
             for (let y = 0; y < squares[x].length; y++) {
-                if (squares[x][y] && squares[x][y] !== SquareType.Ground && squares[x][y] !== SquareType.Void) {
+                if (
+                    squares[x][y] &&
+                    squares[x][y] !== SquareType.Ground &&
+                    squares[x][y] !== SquareType.Void
+                ) {
                     endY = y;
                     if (startY === undefined) {
                         startY = y;
@@ -89,10 +88,14 @@ export class GameBoard
         }
 
         for (let y = 0; y < squares[0].length; y++) {
-            let startX: number|undefined = undefined;
-            let endX: number|undefined = undefined;
+            let startX: number | undefined = undefined;
+            let endX: number | undefined = undefined;
             for (let x = 0; x < squares.length; x++) {
-                if (squares[x][y] && squares[x][y] !== SquareType.Ground && squares[x][y] !== SquareType.Void) {
+                if (
+                    squares[x][y] &&
+                    squares[x][y] !== SquareType.Ground &&
+                    squares[x][y] !== SquareType.Void
+                ) {
                     endX = x;
                     if (startX === undefined) {
                         startX = x;

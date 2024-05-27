@@ -1,4 +1,4 @@
 export enum AssetDirection {
     Previous,
-    Next
+    Next,
 }

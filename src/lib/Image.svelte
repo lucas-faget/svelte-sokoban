@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { fly } from 'svelte/transition';
+    import { fly } from "svelte/transition";
     import type { Coordinates } from "../typescript/Coordinates";
     import { Directions } from "../typescript/Directions";
 
@@ -25,12 +25,12 @@
 </script>
 
 {#if isTransitionEnable}
-    <div class="position-absolute above-the-others" in:fly="{flyTransition()}">
-        <img src={src} alt={alt} />
+    <div class="position-absolute above-the-others" in:fly={flyTransition()}>
+        <img {src} {alt} />
     </div>
 {:else}
     <div class="position-absolute">
-        <img src={src} alt={alt} />
+        <img {src} {alt} />
     </div>
 {/if}
 

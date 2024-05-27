@@ -1,35 +1,33 @@
 import type { Coordinates } from "./Coordinates";
 import { SquareType } from "./SquareType";
 
-export class GameSquare
-{
+export class GameSquare {
     position: Coordinates;
     type: SquareType;
 
-    constructor(x: number, y: number, type: SquareType)
-    {
+    constructor(x: number, y: number, type: SquareType) {
         this.position = {
-            x,y
+            x,
+            y,
         };
         this.type = type;
     }
 
-    static getSquareTypeByChar(char: string): SquareType
-    {
+    static getSquareTypeByChar(char: string): SquareType {
         switch (char) {
-            case ' ':
+            case " ":
                 return SquareType.Ground;
-            case '#':
+            case "#":
                 return SquareType.Wall;
-            case '$':
+            case "$":
                 return SquareType.Box;
-            case '.':
+            case ".":
                 return SquareType.Target;
-            case '*':
+            case "*":
                 return SquareType.BoxOnTarget;
-            case '@':
+            case "@":
                 return SquareType.Player;
-            case '+':
+            case "+":
                 return SquareType.PlayerOnTarget;
             default:
                 return SquareType.Void;
